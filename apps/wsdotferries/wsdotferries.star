@@ -102,10 +102,23 @@ def render_departure(dep_time, sailing):
             drive_up += arr.get("DriveUpSpaceCount", 0)
             show_bar = True
 
+    spaces_str = str(drive_up) if show_bar else "--"
+
     return render.Column(
         cross_align = "start",
         children = [
-            render.Text(content = time_str, font = "tom-thumb", color = "#ffffff"),
+            render.Box(
+                width = BAR_WIDTH,
+                height = 6,
+                child = render.Row(
+                    expanded = True,
+                    main_align = "space_between",
+                    children = [
+                        render.Text(content = time_str, font = "tom-thumb", color = "#ffffff"),
+                        render.Text(content = spaces_str, font = "tom-thumb", color = "#ffffff"),
+                    ],
+                ),
+            ),
             render.Padding(
                 pad = (0, 1, 0, 1),
                 child = render_bar(drive_up, max_space, show_bar),
